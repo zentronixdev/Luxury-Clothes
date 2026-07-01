@@ -2,16 +2,21 @@ import { a as __toESM } from "../_runtime.mjs";
 import { c as require_jsx_runtime, l as require_react } from "../_libs/@react-three/drei+[...].mjs";
 import { i as AnimatePresence, n as useScroll, r as motion, t as useTransform } from "../_libs/framer-motion.mjs";
 import { t as Lenis } from "../_libs/lenis.mjs";
-//#region node_modules/.nitro/vite/services/ssr/assets/routes-DHrdURPv.js
+//#region node_modules/.nitro/vite/services/ssr/assets/routes-CjcGl83z.js
 var import_react = /* @__PURE__ */ __toESM(require_react());
 var import_jsx_runtime = require_jsx_runtime();
+function shouldEnableSmoothScroll() {
+	if (typeof window === "undefined") return false;
+	return !window.matchMedia("(prefers-reduced-motion: reduce)").matches && window.innerWidth >= 1024 && navigator.maxTouchPoints === 0;
+}
 function SmoothScroll() {
 	(0, import_react.useEffect)(() => {
+		if (!shouldEnableSmoothScroll()) return;
 		const lenis = new Lenis({
-			duration: 1.4,
+			duration: .8,
 			easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
 			smoothWheel: true,
-			wheelMultiplier: 1
+			wheelMultiplier: .9
 		});
 		let rafId;
 		function raf(time) {
@@ -31,7 +36,7 @@ var blazer_navy_default = "/assets/blazer-navy-rA_BD6x0.jpg";
 var blazer_maroon_default = "/assets/blazer-maroon-DjcvZvs3.jpg";
 var blazer_emerald_default = "/assets/blazer-emerald-CK704YE_.jpg";
 var blazer_ivory_default = "/assets/blazer-ivory-Nd32Hkro.jpg";
-var BlazerScene = (0, import_react.lazy)(() => import("./BlazerScene-BofDQoGh.mjs").then((m) => ({ default: m.BlazerScene })));
+var BlazerScene = (0, import_react.lazy)(() => import("./BlazerScene-BtrH7BRq.mjs").then((m) => ({ default: m.BlazerScene })));
 var COLORS = [
 	{
 		name: "Obsidian",
@@ -163,16 +168,30 @@ var REVIEWS = [
 var inr = (n) => `₹${n.toLocaleString("en-IN")}`;
 function Index() {
 	const [activeColor, setActiveColor] = (0, import_react.useState)(null);
+	const [showScene, setShowScene] = (0, import_react.useState)(false);
 	const activeIdx = activeColor ? COLOR_IDX[activeColor] : null;
+	(0, import_react.useEffect)(() => {
+		if (typeof window === "undefined") return;
+		const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+		const isLowPower = window.innerWidth < 900 || navigator.hardwareConcurrency <= 4 || navigator.maxTouchPoints > 0;
+		if (reducedMotion || isLowPower) {
+			setShowScene(false);
+			return;
+		}
+		const idleId = typeof window.requestIdleCallback === "function" ? window.requestIdleCallback(() => setShowScene(true)) : window.setTimeout(() => setShowScene(true), 700);
+		return () => {
+			if (typeof window.cancelIdleCallback === "function") window.cancelIdleCallback(idleId);
+			else window.clearTimeout(idleId);
+		};
+	}, []);
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 		className: "relative min-h-screen bg-background text-foreground",
 		children: [
 			/* @__PURE__ */ (0, import_jsx_runtime.jsx)(SmoothScroll, {}),
-			/* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_react.Suspense, {
+			showScene ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_react.Suspense, {
 				fallback: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { className: "fixed inset-0 -z-10 bg-background" }),
 				children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(BlazerScene, { activeColorIdx: activeIdx })
-			}),
-			/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Nav, {}),
+			}) : /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { className: "fixed inset-0 -z-10 bg-[radial-gradient(circle_at_top,_rgba(245,201,118,0.16),_transparent_55%),linear-gradient(135deg,_#050505_0%,_#0e1118_100%)]" }),
 			/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Hero, {}),
 			/* @__PURE__ */ (0, import_jsx_runtime.jsx)(ColorReveal, {
 				activeColor,
@@ -186,56 +205,6 @@ function Index() {
 			/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Booking, { activeColor }),
 			/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Footer, {})
 		]
-	});
-}
-function Nav() {
-	const [scrolled, setScrolled] = (0, import_react.useState)(false);
-	(0, import_react.useEffect)(() => {
-		const on = () => setScrolled(window.scrollY > 40);
-		on();
-		window.addEventListener("scroll", on, { passive: true });
-		return () => window.removeEventListener("scroll", on);
-	}, []);
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("header", {
-		className: `fixed top-0 z-50 w-full transition-all duration-500 ${scrolled ? "backdrop-blur-xl bg-background/60 border-b border-border" : ""}`,
-		children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-			className: "mx-auto flex max-w-7xl items-center justify-between px-6 py-5",
-			children: [
-				/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("a", {
-					href: "#top",
-					className: "font-display text-xl tracking-widest",
-					children: ["MAISON ", /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
-						className: "text-gold-gradient",
-						children: "NOIR"
-					})]
-				}),
-				/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("nav", {
-					className: "hidden gap-10 text-xs uppercase tracking-[0.25em] text-muted-foreground md:flex",
-					children: [
-						/* @__PURE__ */ (0, import_jsx_runtime.jsx)("a", {
-							href: "#collection",
-							className: "hover:text-foreground transition-colors",
-							children: "Collection"
-						}),
-						/* @__PURE__ */ (0, import_jsx_runtime.jsx)("a", {
-							href: "#reviews",
-							className: "hover:text-foreground transition-colors",
-							children: "Reviews"
-						}),
-						/* @__PURE__ */ (0, import_jsx_runtime.jsx)("a", {
-							href: "#booking",
-							className: "hover:text-foreground transition-colors",
-							children: "Book"
-						})
-					]
-				}),
-				/* @__PURE__ */ (0, import_jsx_runtime.jsx)("a", {
-					href: "#booking",
-					className: "rounded-full border border-primary/40 bg-primary/10 px-5 py-2 text-xs uppercase tracking-[0.2em] text-primary transition-all hover:bg-primary hover:text-primary-foreground hover:shadow-gold",
-					children: "Reserve"
-				})
-			]
-		})
 	});
 }
 function Hero() {

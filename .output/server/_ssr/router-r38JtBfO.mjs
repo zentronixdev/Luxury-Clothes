@@ -4,10 +4,10 @@ import { c as HeadContent, d as Outlet, f as lazyRouteComponent, g as useRouter,
 import { t as QueryClient } from "../_libs/tanstack__query-core.mjs";
 import { t as QueryClientProvider } from "../_libs/tanstack__react-query.mjs";
 import { n as objectType, r as stringType, t as enumType } from "../_libs/zod.mjs";
-//#region node_modules/.nitro/vite/services/ssr/assets/router-Bfe69As6.js
+//#region node_modules/.nitro/vite/services/ssr/assets/router-r38JtBfO.js
 var import_react = /* @__PURE__ */ __toESM(require_react());
 var import_jsx_runtime = require_jsx_runtime();
-var styles_default = "/assets/styles-BmuTGNwH.css";
+var styles_default = "/assets/styles-D_x2gZsz.css";
 function reportLovableError(error, context = {}) {
 	if (typeof window === "undefined") return;
 	window.__lovableEvents?.captureException?.(error, {
@@ -162,7 +162,7 @@ function RootComponent() {
 		children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Outlet, {})
 	});
 }
-var $$splitComponentImporter = () => import("./routes-DHrdURPv.mjs");
+var $$splitComponentImporter = () => import("./routes-CjcGl83z.mjs");
 var Route$1 = createFileRoute("/")({
 	component: lazyRouteComponent($$splitComponentImporter, "component"),
 	head: () => ({ meta: [

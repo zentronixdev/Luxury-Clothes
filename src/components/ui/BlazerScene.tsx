@@ -238,6 +238,20 @@ export function BlazerScene({ activeColorIdx }: { activeColorIdx?: number | null
   const isMobile = useIsMobile();
   const active = activeColorIdx ?? null;
   const vignetteRef = useRef<HTMLDivElement>(null);
+  const [isLowPower, setIsLowPower] = useState(false);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const check = () => setIsLowPower(window.innerWidth < 1024 || navigator.hardwareConcurrency <= 4 || mq.matches);
+    check();
+    mq.addEventListener?.("change", check);
+    window.addEventListener("resize", check, { passive: true });
+    return () => {
+      mq.removeEventListener?.("change", check);
+      window.removeEventListener("resize", check);
+    };
+  }, []);
 
   // GSAP vignette when active color changes
   useEffect(() => {
@@ -252,14 +266,18 @@ export function BlazerScene({ activeColorIdx }: { activeColorIdx?: number | null
     Math.round(progress * (COLOR_STOPS.length - 1)),
   );
 
+  if (isLowPower) {
+    return <div className="fixed inset-0 -z-10 bg-[radial-gradient(circle_at_top,_rgba(245,201,118,0.16),_transparent_55%),linear-gradient(135deg,_#050505_0%,_#0e1118_100%)]" />;
+  }
+
   return (
     <div className="fixed inset-0 -z-10">
       <Canvas
         shadows={!isMobile}
         camera={{ position: [0, 0.3, 6], fov: 32 }}
-        dpr={isMobile ? [1, 1.25] : [1, 1.75]}
-        gl={{ antialias: !isMobile, powerPreference: "high-performance" }}
-        performance={{ min: 0.5 }}
+        dpr={isMobile ? [1, 1.1] : [1, 1.35]}
+        gl={{ antialias: !isMobile, alpha: true, powerPreference: isMobile ? "default" : "high-performance" }}
+        performance={{ min: 0.2 }}
         frameloop="always"
       >
         <color attach="background" args={["#050505"]} />
@@ -268,7 +286,7 @@ export function BlazerScene({ activeColorIdx }: { activeColorIdx?: number | null
         <Float speed={1} rotationIntensity={0.15} floatIntensity={0.4}>
           <Blazer scrollY={scrollY} activeColorIdx={active} />
         </Float>
-        <Particles count={isMobile ? 30 : 90} />
+        <Particles count={isMobile ? 16 : 36} />
         {!isMobile && (
           <ContactShadows position={[0, -1.9, 0]} opacity={0.6} scale={8} blur={2.5} far={4} color="#000" />
         )}

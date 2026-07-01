@@ -2,7 +2,7 @@ import { a as __toESM } from "../_runtime.mjs";
 import { f as ExtrudeGeometry, j as Shape, s as Color } from "../_libs/@monogrid/gainmap-js+[...].mjs";
 import { a as useFrame, c as require_jsx_runtime, i as Canvas, l as require_react, n as Environment, o as useThree, r as Float, t as ContactShadows } from "../_libs/@react-three/drei+[...].mjs";
 import { t as gsapWithCSS } from "../_libs/gsap.mjs";
-//#region node_modules/.nitro/vite/services/ssr/assets/BlazerScene-BofDQoGh.js
+//#region node_modules/.nitro/vite/services/ssr/assets/BlazerScene-BtrH7BRq.js
 var import_react = /* @__PURE__ */ __toESM(require_react());
 var import_jsx_runtime = require_jsx_runtime();
 var COLOR_STOPS = [
@@ -401,6 +401,19 @@ function BlazerScene({ activeColorIdx }) {
 	const isMobile = useIsMobile();
 	const active = activeColorIdx ?? null;
 	const vignetteRef = (0, import_react.useRef)(null);
+	const [isLowPower, setIsLowPower] = (0, import_react.useState)(false);
+	(0, import_react.useEffect)(() => {
+		if (typeof window === "undefined") return;
+		const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
+		const check = () => setIsLowPower(window.innerWidth < 1024 || navigator.hardwareConcurrency <= 4 || mq.matches);
+		check();
+		mq.addEventListener?.("change", check);
+		window.addEventListener("resize", check, { passive: true });
+		return () => {
+			mq.removeEventListener?.("change", check);
+			window.removeEventListener("resize", check);
+		};
+	}, []);
 	(0, import_react.useEffect)(() => {
 		if (!vignetteRef.current) return;
 		const v = COLOR_STOPS[active ?? Math.min(COLOR_STOPS.length - 1, Math.round(progress * (COLOR_STOPS.length - 1)))].vignette;
@@ -411,6 +424,7 @@ function BlazerScene({ activeColorIdx }) {
 		});
 	}, [active, progress]);
 	const displayedIdx = active ?? Math.min(COLOR_STOPS.length - 1, Math.round(progress * (COLOR_STOPS.length - 1)));
+	if (isLowPower) return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { className: "fixed inset-0 -z-10 bg-[radial-gradient(circle_at_top,_rgba(245,201,118,0.16),_transparent_55%),linear-gradient(135deg,_#050505_0%,_#0e1118_100%)]" });
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 		className: "fixed inset-0 -z-10",
 		children: [
@@ -424,12 +438,13 @@ function BlazerScene({ activeColorIdx }) {
 					],
 					fov: 32
 				},
-				dpr: isMobile ? [1, 1.25] : [1, 1.75],
+				dpr: isMobile ? [1, 1.1] : [1, 1.35],
 				gl: {
 					antialias: !isMobile,
-					powerPreference: "high-performance"
+					alpha: true,
+					powerPreference: isMobile ? "default" : "high-performance"
 				},
-				performance: { min: .5 },
+				performance: { min: .2 },
 				frameloop: "always",
 				children: [
 					/* @__PURE__ */ (0, import_jsx_runtime.jsx)("color", {
@@ -454,7 +469,7 @@ function BlazerScene({ activeColorIdx }) {
 							activeColorIdx: active
 						})
 					}),
-					/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Particles, { count: isMobile ? 30 : 90 }),
+					/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Particles, { count: isMobile ? 16 : 36 }),
 					!isMobile && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ContactShadows, {
 						position: [
 							0,

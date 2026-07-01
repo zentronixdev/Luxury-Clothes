@@ -68,16 +68,43 @@ const inr = (n: number) => `₹${n.toLocaleString("en-IN")}`;
 
 function Index() {
   const [activeColor, setActiveColor] = useState<ColorKey | null>(null);
+  const [showScene, setShowScene] = useState(false);
   const activeIdx = activeColor ? COLOR_IDX[activeColor] : null;
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const isLowPower = window.innerWidth < 900 || navigator.hardwareConcurrency <= 4 || navigator.maxTouchPoints > 0;
+
+    if (reducedMotion || isLowPower) {
+      setShowScene(false);
+      return;
+    }
+
+    const idleId = typeof window.requestIdleCallback === "function"
+      ? window.requestIdleCallback(() => setShowScene(true))
+      : window.setTimeout(() => setShowScene(true), 700);
+
+    return () => {
+      if (typeof window.cancelIdleCallback === "function") {
+        window.cancelIdleCallback(idleId as number);
+      } else {
+        window.clearTimeout(idleId as number);
+      }
+    };
+  }, []);
 
   return (
     <div className="relative min-h-screen bg-background text-foreground">
       <SmoothScroll />
-      <Suspense fallback={<div className="fixed inset-0 -z-10 bg-background" />}>
-        <BlazerScene activeColorIdx={activeIdx} />
-      </Suspense>
-
-      <Nav />
+      {showScene ? (
+        <Suspense fallback={<div className="fixed inset-0 -z-10 bg-background" />}>
+          <BlazerScene activeColorIdx={activeIdx} />
+        </Suspense>
+      ) : (
+        <div className="fixed inset-0 -z-10 bg-[radial-gradient(circle_at_top,_rgba(245,201,118,0.16),_transparent_55%),linear-gradient(135deg,_#050505_0%,_#0e1118_100%)]" />
+      )}
       <Hero />
       <ColorReveal activeColor={activeColor} setActiveColor={setActiveColor} />
       <Collection activeColor={activeColor} setActiveColor={setActiveColor} />
