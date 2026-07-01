@@ -17,9 +17,9 @@ export const Route = createFileRoute("/")({
   component: Index,
   head: () => ({
     meta: [
-      { title: "Maison Noir · Luxury Wedding Blazer Rental, Chennai" },
+      { title: "Zentronix Rentals · Luxury Wedding Blazer Rental, Chennai" },
       { name: "description", content: "Rent hand-tailored wedding blazers in Chennai. Cinematic fittings, five signature colours, priced from ₹8,999." },
-      { property: "og:title", content: "Maison Noir · Wedding Blazer Rental, Chennai" },
+      { property: "og:title", content: "Zentronix Rentals · Wedding Blazer Rental, Chennai" },
       { property: "og:description", content: "Luxury wedding blazers, rented and delivered across Chennai." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -126,8 +126,9 @@ function Nav() {
   return (
     <header className={`fixed top-0 z-50 w-full transition-all duration-500 ${scrolled ? "backdrop-blur-xl bg-background/60 border-b border-border" : ""}`}>
       <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-5">
-        <a href="#top" className="font-display text-xl tracking-widest">
-          MAISON <span className="text-gold-gradient">NOIR</span>
+        <a href="#top" className="inline-flex items-center gap-3">
+          <img src="/logo.svg" alt="Zentronix Rentals" className="h-10 w-auto" />
+          <span className="font-display text-xl tracking-widest">ZENTRONIX <span className="text-gold-gradient">RENTALS</span></span>
         </a>
         <nav className="hidden gap-10 text-xs uppercase tracking-[0.25em] text-muted-foreground md:flex">
           <a href="#collection" className="hover:text-foreground transition-colors">Collection</a>
@@ -499,11 +500,9 @@ function Footer() {
   return (
     <footer className="relative border-t border-border px-6 py-12">
       <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-6 text-center md:flex-row md:text-left">
-        <div>
-          <div className="font-display text-xl tracking-widest">
-            MAISON <span className="text-gold-gradient">NOIR</span>
-          </div>
-          <p className="mt-2 text-xs text-muted-foreground">© 2026 Maison Noir Atelier · Chennai. Woven with care.</p>
+        <div className="flex flex-col items-center gap-4 md:items-start md:gap-2">
+          <img src="/logo.svg" alt="Zentronix Rentals" className="h-10 w-auto" />
+          <p className="mt-2 text-xs text-muted-foreground">© 2026 Zentronix Rentals · Chennai. Woven with care.</p>
         </div>
         <div className="flex gap-6 text-[10px] uppercase tracking-[0.3em] text-muted-foreground">
           <a href="#" className="hover:text-primary">Instagram</a>
