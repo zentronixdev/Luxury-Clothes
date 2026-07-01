@@ -148,6 +148,17 @@ function DynamicLights({ activeColorIdx }: { activeColorIdx: number | null }) {
   const lightColor = useRef(new THREE.Color(COLOR_STOPS[0].light));
 
   useEffect(() => {
+    if (!key.current) return;
+    key.current.shadow.mapSize.set(1024, 1024);
+    key.current.shadow.bias = -0.0001;
+    key.current.shadow.normalBias = 0.02;
+    key.current.shadow.radius = 2;
+    key.current.shadow.camera.near = 1;
+    key.current.shadow.camera.far = 30;
+    key.current.shadow.camera.updateProjectionMatrix();
+  }, []);
+
+  useEffect(() => {
     if (activeColorIdx === null) return;
     const target = new THREE.Color(COLOR_STOPS[activeColorIdx].light);
     gsap.to(lightColor.current, {
@@ -166,7 +177,7 @@ function DynamicLights({ activeColorIdx }: { activeColorIdx: number | null }) {
 
   return (
     <>
-      <spotLight ref={key} position={[0, 6, 4]} angle={0.5} penumbra={0.9} intensity={40} color="#f5c976" castShadow shadow-mapSize={[1024, 1024]} />
+      <spotLight ref={key} position={[0, 6, 4]} angle={0.5} penumbra={0.9} intensity={40} color="#f5c976" castShadow />
       <spotLight ref={rim} position={[-5, 2, 3]} angle={0.6} penumbra={1} intensity={8} color="#f0b060" />
       <spotLight position={[5, 2, 3]} angle={0.6} penumbra={1} intensity={8} color="#c98a3a" />
       <ambientLight intensity={0.12} />

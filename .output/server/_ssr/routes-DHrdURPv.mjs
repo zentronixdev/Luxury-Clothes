@@ -2,7 +2,7 @@ import { a as __toESM } from "../_runtime.mjs";
 import { c as require_jsx_runtime, l as require_react } from "../_libs/@react-three/drei+[...].mjs";
 import { i as AnimatePresence, n as useScroll, r as motion, t as useTransform } from "../_libs/framer-motion.mjs";
 import { t as Lenis } from "../_libs/lenis.mjs";
-//#region node_modules/.nitro/vite/services/ssr/assets/routes-B9-qym8J.js
+//#region node_modules/.nitro/vite/services/ssr/assets/routes-DHrdURPv.js
 var import_react = /* @__PURE__ */ __toESM(require_react());
 var import_jsx_runtime = require_jsx_runtime();
 function SmoothScroll() {
@@ -31,7 +31,7 @@ var blazer_navy_default = "/assets/blazer-navy-rA_BD6x0.jpg";
 var blazer_maroon_default = "/assets/blazer-maroon-DjcvZvs3.jpg";
 var blazer_emerald_default = "/assets/blazer-emerald-CK704YE_.jpg";
 var blazer_ivory_default = "/assets/blazer-ivory-Nd32Hkro.jpg";
-var BlazerScene = (0, import_react.lazy)(() => import("./BlazerScene-CXPwUW_g.mjs").then((m) => ({ default: m.BlazerScene })));
+var BlazerScene = (0, import_react.lazy)(() => import("./BlazerScene-BofDQoGh.mjs").then((m) => ({ default: m.BlazerScene })));
 var COLORS = [
 	{
 		name: "Obsidian",
@@ -630,7 +630,7 @@ function Booking({ activeColor }) {
 			notes: String(fd.get("notes") || "")
 		};
 		try {
-			const res = await fetch("/api/public/booking", {
+			const res = await fetch("/api/booking", {
 				method: "POST",
 				headers: { "Content-Type": "application/json" },
 				body: JSON.stringify(payload)

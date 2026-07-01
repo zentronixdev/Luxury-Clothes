@@ -2,7 +2,7 @@ import { a as __toESM } from "../_runtime.mjs";
 import { f as ExtrudeGeometry, j as Shape, s as Color } from "../_libs/@monogrid/gainmap-js+[...].mjs";
 import { a as useFrame, c as require_jsx_runtime, i as Canvas, l as require_react, n as Environment, o as useThree, r as Float, t as ContactShadows } from "../_libs/@react-three/drei+[...].mjs";
 import { t as gsapWithCSS } from "../_libs/gsap.mjs";
-//#region node_modules/.nitro/vite/services/ssr/assets/BlazerScene-CXPwUW_g.js
+//#region node_modules/.nitro/vite/services/ssr/assets/BlazerScene-BofDQoGh.js
 var import_react = /* @__PURE__ */ __toESM(require_react());
 var import_jsx_runtime = require_jsx_runtime();
 var COLOR_STOPS = [
@@ -279,6 +279,16 @@ function DynamicLights({ activeColorIdx }) {
 	const rim = (0, import_react.useRef)(null);
 	const lightColor = (0, import_react.useRef)(new Color(COLOR_STOPS[0].light));
 	(0, import_react.useEffect)(() => {
+		if (!key.current) return;
+		key.current.shadow.mapSize.set(1024, 1024);
+		key.current.shadow.bias = -1e-4;
+		key.current.shadow.normalBias = .02;
+		key.current.shadow.radius = 2;
+		key.current.shadow.camera.near = 1;
+		key.current.shadow.camera.far = 30;
+		key.current.shadow.camera.updateProjectionMatrix();
+	}, []);
+	(0, import_react.useEffect)(() => {
 		if (activeColorIdx === null) return;
 		const target = new Color(COLOR_STOPS[activeColorIdx].light);
 		gsapWithCSS.to(lightColor.current, {
@@ -308,8 +318,7 @@ function DynamicLights({ activeColorIdx }) {
 			penumbra: .9,
 			intensity: 40,
 			color: "#f5c976",
-			castShadow: true,
-			"shadow-mapSize": [1024, 1024]
+			castShadow: true
 		}),
 		/* @__PURE__ */ (0, import_jsx_runtime.jsx)("spotLight", {
 			ref: rim,

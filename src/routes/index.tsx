@@ -347,7 +347,7 @@ function Booking({ activeColor }: { activeColor: ColorKey | null }) {
       notes: String(fd.get("notes") || ""),
     };
     try {
-      const res = await fetch("/api/public/booking", {
+      const res = await fetch("/api/booking", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
