@@ -1,0 +1,146 @@
+@import "tailwindcss" source(none);
+@source "../src";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-gold: var(--gold);
+  --color-gold-soft: var(--gold-soft);
+  --color-gold-deep: var(--gold-deep);
+  --font-display: "Cormorant Garamond", serif;
+  --font-sans: "Inter", sans-serif;
+  --font-mono: "JetBrains Mono", monospace;
+}
+
+:root {
+  --radius: 0.5rem;
+  /* Cinematic obsidian + gold */
+  --background: oklch(0.09 0.005 60);
+  --foreground: oklch(0.96 0.01 80);
+  --card: oklch(0.12 0.008 60);
+  --card-foreground: oklch(0.96 0.01 80);
+  --popover: oklch(0.12 0.008 60);
+  --popover-foreground: oklch(0.96 0.01 80);
+  --primary: oklch(0.82 0.14 80);
+  --primary-foreground: oklch(0.09 0.005 60);
+  --secondary: oklch(0.18 0.01 60);
+  --secondary-foreground: oklch(0.96 0.01 80);
+  --muted: oklch(0.16 0.008 60);
+  --muted-foreground: oklch(0.65 0.02 80);
+  --accent: oklch(0.72 0.16 65);
+  --accent-foreground: oklch(0.09 0.005 60);
+  --destructive: oklch(0.55 0.22 25);
+  --destructive-foreground: oklch(0.98 0 0);
+  --border: oklch(0.22 0.01 70 / 60%);
+  --input: oklch(0.22 0.01 70);
+  --ring: oklch(0.82 0.14 80);
+
+  --gold: oklch(0.82 0.14 80);
+  --gold-soft: oklch(0.88 0.08 85);
+  --gold-deep: oklch(0.62 0.16 60);
+
+  --gradient-gold: linear-gradient(135deg, oklch(0.88 0.08 85), oklch(0.72 0.16 65) 50%, oklch(0.55 0.14 55));
+  --gradient-vignette: radial-gradient(ellipse at center, transparent 0%, oklch(0.05 0 0 / 0.85) 100%);
+  --shadow-gold: 0 20px 60px -20px oklch(0.72 0.16 65 / 0.5);
+  --shadow-deep: 0 40px 80px -30px oklch(0 0 0 / 0.8);
+}
+
+.dark {
+  --background: oklch(0.09 0.005 60);
+  --foreground: oklch(0.96 0.01 80);
+}
+
+@utility text-gold-gradient {
+  background: var(--gradient-gold);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+@utility bg-vignette {
+  background: var(--gradient-vignette);
+}
+
+@utility shadow-gold {
+  box-shadow: var(--shadow-gold);
+}
+
+@utility shine {
+  position: relative;
+  overflow: hidden;
+}
+
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+
+  html, body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  h1, h2, h3, h4 {
+    font-family: var(--font-display);
+    font-weight: 300;
+    letter-spacing: -0.02em;
+  }
+
+  ::selection {
+    background: var(--gold);
+    color: var(--background);
+  }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--background); }
+::-webkit-scrollbar-thumb { background: var(--gold-deep); border-radius: 3px; }
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-12px); }
+}
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+@keyframes particle-drift {
+  0% { transform: translate(0, 0); opacity: 0; }
+  10% { opacity: 1; }
+  100% { transform: translate(var(--tx, 20px), -100vh); opacity: 0; }
+}
+
+.animate-float { animation: float 6s ease-in-out infinite; }
+.text-shimmer {
+  background: linear-gradient(90deg, transparent, oklch(0.88 0.08 85 / 0.4), transparent);
+  background-size: 200% 100%;
+  animation: shimmer 3s linear infinite;
+}
